@@ -1,5 +1,5 @@
 package com.maoyan.demo;
 
-public interface Before {
+public interface BeforeAdvice {
     void invoke();
 }

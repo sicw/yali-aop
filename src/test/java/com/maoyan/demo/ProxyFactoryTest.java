@@ -16,7 +16,7 @@ public class ProxyFactoryTest {
         ProxyFactory proxyFactory = new ProxyFactory();
         proxyFactory.setTarget(testBean);
         proxyFactory.addAdvisor(new AfterAdvisor());
-        proxyFactory.addAdvisor(new BeforeAdvisor());
+        proxyFactory.addAdvisor(new BeforeAdviceAdvisor());
 
         ITestBean demo = (ITestBean) proxyFactory.getProxy();
 

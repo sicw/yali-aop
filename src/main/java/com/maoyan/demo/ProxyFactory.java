@@ -43,7 +43,7 @@ public class ProxyFactory {
 //            List<Object> befores = new ArrayList<>();
 //            List<Object> afters = new ArrayList<>();
 //            for (Object advisor : advisors) {
-//                if(advisor instanceof Before){
+//                if(advisor instanceof BeforeAdvice){
 //                    befores.add(advisor);
 //                } else if(advisor instanceof After){
 //                    afters.add(advisor);
@@ -51,7 +51,7 @@ public class ProxyFactory {
 //            }
 //
 //            for (Object before : befores) {
-//                ((Before)before).invoke();
+//                ((BeforeAdvice)before).invoke();
 //            }
 //
 //            Object ret = method.invoke(target,args);
