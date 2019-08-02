@@ -5,5 +5,5 @@ package com.maoyan.demo;
  * @date 2019/08/02
  */
 public interface MethodInterceptor {
-    Object invoke(MethodInvocation invocation);
+    Object invoke(MethodInvocation invocation) throws Exception;
 }
