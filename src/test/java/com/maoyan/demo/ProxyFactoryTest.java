@@ -20,4 +20,21 @@ public class ProxyFactoryTest {
         System.out.println(demo.getAge());
         System.out.println(demo.getName());
     }
+
+    @Test
+    public void testInterceptor(){
+        TestBean testBean = new TestBean();
+        testBean.setAge(23);
+        testBean.setName("sicwen");
+
+        ProxyFactory proxyFactory = new ProxyFactory();
+        proxyFactory.setTarget(testBean);
+        proxyFactory.addAdvisor(new AfterAdvisor());
+        proxyFactory.addAdvisor(new BeforeAdvisor());
+
+        ITestBean demo = (ITestBean) proxyFactory.getProxy();
+
+        System.out.println(demo.getAge());
+        System.out.println(demo.getName());
+    }
 }

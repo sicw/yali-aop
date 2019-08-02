@@ -27,8 +27,10 @@ public class ProxyFactory {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
+            List<MethodInterceptor> interceptors = new ArrayList<>();
+
             // 构建拦截器链
-            ReflectiveMethodInvocation invocaton = new ReflectiveMethodInvocation(target,method,null);
+            ReflectiveMethodInvocation invocaton = new ReflectiveMethodInvocation(target,method,args,interceptors);
 
             return invocaton.proceed();
 

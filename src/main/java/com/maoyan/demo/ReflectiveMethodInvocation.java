@@ -21,9 +21,10 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
     private int index = -1;
 
     public ReflectiveMethodInvocation(Object target,Method targetMethod,Object[] args, List<MethodInterceptor> interceptors){
+        this.targetObject = target;
         this.targetMethod = targetMethod;
-        this.interceptors = interceptors;
         this.args = args;
+        this.interceptors = interceptors;
     }
 
     @Override
