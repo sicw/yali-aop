@@ -1,5 +1,7 @@
 package com.maoyan.demo.aspectj;
 
+import com.maoyan.demo.annotation.Aspect;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -12,6 +14,12 @@ public class AspectMetadata {
     private Method[] declaredMethods;
 
     private String pointcutExpression;
+
+    public AspectMetadata(Class<?> aspectClass) {
+        declaredMethods = aspectClass.getDeclaredMethods();
+        Aspect aspect = aspectClass.getAnnotation(Aspect.class);
+        pointcutExpression = aspect.value();
+    }
 
     @Override
     public String toString() {
