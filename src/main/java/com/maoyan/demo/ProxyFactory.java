@@ -26,28 +26,35 @@ public class ProxyFactory {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            //这里会判断advisors类型 然后串成一条调用连,暂时实现两种调用 before和after
-            List<Object> befores = new ArrayList<>();
-            List<Object> afters = new ArrayList<>();
-            for (Object advisor : advisors) {
-                if(advisor instanceof Before){
-                    befores.add(advisor);
-                } else if(advisor instanceof After){
-                    afters.add(advisor);
-                }
-            }
 
-            for (Object before : befores) {
-                ((Before)before).invoke();
-            }
+            // 构建拦截器链
+            ReflectiveMethodInvocation invocaton = new ReflectiveMethodInvocation(target,method,null);
 
-            Object ret = method.invoke(target,args);
+            return invocaton.invoke();
 
-            for (Object after : afters) {
-                ((After)after).invoke();
-            }
 
-            return ret;
+//            // 这里会判断advisors类型 然后串成一条调用连,暂时实现两种调用 before和after
+//            List<Object> befores = new ArrayList<>();
+//            List<Object> afters = new ArrayList<>();
+//            for (Object advisor : advisors) {
+//                if(advisor instanceof Before){
+//                    befores.add(advisor);
+//                } else if(advisor instanceof After){
+//                    afters.add(advisor);
+//                }
+//            }
+//
+//            for (Object before : befores) {
+//                ((Before)before).invoke();
+//            }
+//
+//            Object ret = method.invoke(target,args);
+//
+//            for (Object after : afters) {
+//                ((After)after).invoke();
+//            }
+//
+//            return ret;
         }
     }
 
