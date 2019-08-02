@@ -28,7 +28,7 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
     }
 
     @Override
-    public Object proceed() throws InvocationTargetException, IllegalAccessException {
+    public Object proceed() throws Exception {
         if(index == (interceptors.size() - 1)){
             return targetMethod.invoke(targetObject,args);
         }
