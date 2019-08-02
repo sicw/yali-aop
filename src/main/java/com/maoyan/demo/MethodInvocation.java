@@ -10,4 +10,6 @@ public interface MethodInvocation {
     Method getMethod();
 
     Object[] getArgs();
+
+    Object proceed() throws Exception;
 }
