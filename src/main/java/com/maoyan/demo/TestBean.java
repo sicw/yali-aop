@@ -18,6 +18,11 @@ public class TestBean implements ITestBean {
         return name;
     }
 
+    @Override
+    public void doWork() {
+        System.out.println("TestBean.doWork");
+    }
+
     public void setName(String name) {
         this.name = name;
     }

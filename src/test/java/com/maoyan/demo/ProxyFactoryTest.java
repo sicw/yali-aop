@@ -38,6 +38,6 @@ public class ProxyFactoryTest {
 
         ITestBean demo = (ITestBean) proxyFactory.getProxy();
 
-        System.out.println(demo.getName());
+        demo.doWork();
     }
 }
