@@ -18,7 +18,7 @@ public class ReflectiveMethodInvocation {
         this.interceptors = interceptors;
     }
 
-    public Object invoke() {
+    public Object proceed() {
 
 
         return null;

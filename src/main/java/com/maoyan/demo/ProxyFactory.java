@@ -30,7 +30,7 @@ public class ProxyFactory {
             // 构建拦截器链
             ReflectiveMethodInvocation invocaton = new ReflectiveMethodInvocation(target,method,null);
 
-            return invocaton.invoke();
+            return invocaton.proceed();
 
 
 //            // 这里会判断advisors类型 然后串成一条调用连,暂时实现两种调用 before和after
