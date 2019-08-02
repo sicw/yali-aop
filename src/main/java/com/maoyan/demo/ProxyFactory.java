@@ -12,6 +12,8 @@ public class ProxyFactory {
 
     private Object target;
 
+    private List<MethodInterceptor> interceptors = new ArrayList<>();
+
     private AdvisedSupport advised = new AdvisedSupport();
 
     public void addAdvisor(Object advisor){
@@ -22,12 +24,14 @@ public class ProxyFactory {
         return Proxy.newProxyInstance(ProxyFactory.class.getClassLoader(),target.getClass().getInterfaces(),new Handler());
     }
 
+    public void addInterceptor(MethodInterceptor interceptor){
+        interceptors.add(interceptor);
+    }
+
     private class Handler implements InvocationHandler{
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
-            List<MethodInterceptor> interceptors = new ArrayList<>();
 
             // 构建拦截器链
             ReflectiveMethodInvocation invocaton = new ReflectiveMethodInvocation(target,method,args,interceptors);
