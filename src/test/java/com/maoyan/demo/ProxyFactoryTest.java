@@ -40,4 +40,23 @@ public class ProxyFactoryTest {
 
         demo.doWork();
     }
+
+    @Test
+    public void testTwiceProxy(){
+        TestBean testBean = new TestBean();
+
+        ProxyFactory proxyFactory = new ProxyFactory();
+        proxyFactory.setTarget(testBean);
+        proxyFactory.addInterceptor(new BeforeInterceptor());
+
+        Object target = proxyFactory.getProxy();
+
+        ProxyFactory proxyFactoryNew = new ProxyFactory();
+        proxyFactoryNew.setTarget(target);
+        proxyFactoryNew.addInterceptor(new AfterInterceptor());
+
+        ITestBean newObject = (ITestBean) proxyFactoryNew.getProxy();
+
+        newObject.doWork();
+    }
 }
