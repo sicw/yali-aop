@@ -1,5 +1,7 @@
 package com.maoyan.demo;
 
+import com.maoyan.demo.adapter.MethodBeforeAdviceAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 

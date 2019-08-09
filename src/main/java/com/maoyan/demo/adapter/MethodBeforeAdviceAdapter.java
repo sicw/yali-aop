@@ -1,4 +1,4 @@
-package com.maoyan.demo;
+package com.maoyan.demo.adapter;
 
 import com.maoyan.demo.*;
 import com.maoyan.demo.interceptor.MethodBeforeAdviceInterceptor;
