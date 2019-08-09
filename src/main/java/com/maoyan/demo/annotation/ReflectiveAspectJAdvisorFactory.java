@@ -1,9 +1,12 @@
 package com.maoyan.demo.annotation;
 
+import com.maoyan.demo.Advice;
 import com.maoyan.demo.Advisor;
+import com.maoyan.demo.BeforeAdvice;
 import com.maoyan.demo.aspectj.MetadataAwareAspectInstanceFactory;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,31 +20,27 @@ import java.util.List;
 public class ReflectiveAspectJAdvisorFactory implements AspectJAdvisorFactory {
     @Override
     public List<Advisor> getAdvisors(MetadataAwareAspectInstanceFactory aif) {
-
-        // 获取静态的Interceptor和动态解析的Interceptor(Advisor  哪些过滤哪些不过滤)
-
-
-
-
-
-
+        List<Advisor> result = new ArrayList<>();
         // 获取所有Method
         Method[] methods = aif.getAspectMetadata().getDeclaredMethods();
         // 获取注解
         for (Method method : methods) {
             Before before = method.getAnnotation(Before.class);
             if (before != null) {
-                // 获取Before的Interceptor
-
-                continue;
+                Advisor advisor = new Advisor() {
+                    @Override
+                    public Advice getAdvice() {
+                        return new BeforeAdvice() {
+                            @Override
+                            public void invoke() {
+                                System.out.println("ReflectiveAspectJAdvisorFactory.invoke");
+                            }
+                        };
+                    }
+                };
+                result.add(advisor);
             }
         }
-
-
-        // 查找注册的Interceptor
-
-        // 返回Interceptor
-
-        return null;
+        return result;
     }
 }
