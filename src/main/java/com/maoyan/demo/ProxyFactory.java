@@ -1,5 +1,10 @@
 package com.maoyan.demo;
 
+import com.maoyan.demo.annotation.ReflectiveAspectJAdvisorFactory;
+import com.maoyan.demo.aspectj.AspectMetadata;
+import com.maoyan.demo.aspectj.MetadataAwareAspectInstanceFactory;
+import com.maoyan.demo.aspectj.MetadataAwareAspectInstanceFactoryImpl;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -33,8 +38,19 @@ public class ProxyFactory {
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
+
+            ReflectiveAspectJAdvisorFactory advisorFactory = new ReflectiveAspectJAdvisorFactory();
+            MetadataAwareAspectInstanceFactoryImpl maif = new MetadataAwareAspectInstanceFactoryImpl();
+            maif.setAspectMetadata(new AspectMetadata(TargetBean.class));
+            maif.setAspectInstance(new TargetBean());
+            List<Advisor> advisors = advisorFactory.getAdvisors(maif);
+
+
+            DefaultAdvisorChainFactory advisorChainFactory = new DefaultAdvisorChainFactory();
+            List<Object> interceptors = advisorChainFactory.getInterceptorsAndDynamicInterceptionAdvice(advisors);
+
             // 构建拦截器链
-            ReflectiveMethodInvocation invocaton = new ReflectiveMethodInvocation(target,method,args,interceptors);
+            ReflectiveMethodInvocation invocaton = new ReflectiveMethodInvocation(target,method,args,null,interceptors);
 
             return invocaton.proceed();
 
