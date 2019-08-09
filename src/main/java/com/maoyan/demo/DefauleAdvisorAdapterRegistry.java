@@ -12,10 +12,16 @@ public class DefauleAdvisorAdapterRegistry {
     private final List<AdvisorAdapter> adapters = new ArrayList<>(3);
 
     public DefauleAdvisorAdapterRegistry(){
-
+        adapters.add(new MethodBeforeAdviceAdapter());
     }
 
     public MethodInterceptor[] getInterceptors(Advisor advisor){
-        return null;
+        List<MethodInterceptor> interceptors = new ArrayList<>();
+        for (AdvisorAdapter adapter : adapters) {
+            if (adapter.supportAdvice(advisor.getAdvice())) {
+                interceptors.add(adapter.getInterceptor(advisor));
+            }
+        }
+        return interceptors.toArray(new MethodInterceptor[interceptors.size()]);
     }
 }

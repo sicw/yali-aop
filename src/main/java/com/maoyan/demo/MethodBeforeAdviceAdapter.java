@@ -1,7 +1,7 @@
-import com.maoyan.demo.Advice;
-import com.maoyan.demo.Advisor;
-import com.maoyan.demo.AdvisorAdapter;
-import com.maoyan.demo.MethodInterceptor;
+package com.maoyan.demo;
+
+import com.maoyan.demo.*;
+import com.maoyan.demo.interceptor.MethodBeforeAdviceInterceptor;
 
 /**
  * @author sichengwen
@@ -15,6 +15,7 @@ public class MethodBeforeAdviceAdapter implements AdvisorAdapter {
 
     @Override
     public MethodInterceptor getInterceptor(Advisor advisor) {
-        return null;
+        BeforeAdvice advice = (BeforeAdvice) advisor.getAdvice();
+        return new MethodBeforeAdviceInterceptor(advice);
     }
 }
