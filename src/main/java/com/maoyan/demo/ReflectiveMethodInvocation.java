@@ -1,5 +1,7 @@
 package com.maoyan.demo;
 
+import sun.rmi.transport.ObjectTable;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -12,6 +14,8 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
 
     private List<MethodInterceptor> interceptors;
 
+    private List<Object> interceptorsAndDynamicMethodMatchers;
+
     private Method targetMethod;
 
     private Object targetObject;
@@ -20,20 +24,25 @@ public class ReflectiveMethodInvocation implements MethodInvocation {
 
     private int index = -1;
 
-    public ReflectiveMethodInvocation(Object target,Method targetMethod,Object[] args, List<MethodInterceptor> interceptors){
+    public ReflectiveMethodInvocation(Object target,Method targetMethod,Object[] args, List<MethodInterceptor> interceptors,List<Object> chain){
         this.targetObject = target;
         this.targetMethod = targetMethod;
         this.args = args;
         this.interceptors = interceptors;
+        this.interceptorsAndDynamicMethodMatchers = chain;
     }
 
     @Override
     public Object proceed() throws Exception {
-        if(index == (interceptors.size() - 1)){
+        if(index == (interceptorsAndDynamicMethodMatchers.size() - 1)){
             return targetMethod.invoke(targetObject,args);
         }
-        MethodInterceptor interceptor = interceptors.get(++index);
-        return interceptor.invoke(this);
+        Object interceptor = interceptorsAndDynamicMethodMatchers.get(++index);
+
+        if(interceptor instanceof MethodInterceptor){
+            return ((MethodInterceptor) interceptor).invoke(this);
+        }
+        return null;
     }
 
     @Override
